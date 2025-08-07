@@ -113,22 +113,14 @@ Frontend Developer @ Thema Labs (01/2024 - Present)
   education: `Education:
 
 B.Tech - Jaypee University of Engineering and Technology
-• Advanced Software Development
-
-Pesto Tech Fellowship (2023-2024)
-• Advanced Software Development Program
-
-Additional Learning:
-• FreeCodeCamp UI Certification
-• Udemy Backend Engineering with Go
-• Edx HarvardX Introduction to CS (2025)`,
+• Mechanical Engineering`,
     
   certs: `Certifications:
 
 • Pesto Tech Fellowship - Advanced Software Development (2023-2024)
+• Alchemy University - Blockchain Development (2025)
 • FreeCodeCamp UI Certification
-• Udemy Backend Engineering with Go
-• Edx HarvardX Introduction to CS (2025)`,
+• Udemy Backend Engineering with Go`,
     
   contact: `Contact Information:
 
