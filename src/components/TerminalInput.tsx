@@ -5,7 +5,6 @@ import { useRef, useEffect } from 'react';
 interface TerminalInputProps {
   currentCommand: string;
   onCommandChange: (command: string) => void;
-  onCommandSubmit: () => void;
   onKeyPress: (e: React.KeyboardEvent) => void;
   disabled?: boolean;
 }
@@ -13,7 +12,6 @@ interface TerminalInputProps {
 export default function TerminalInput({ 
   currentCommand, 
   onCommandChange, 
-  onCommandSubmit, 
   onKeyPress,
   disabled = false
 }: TerminalInputProps) {

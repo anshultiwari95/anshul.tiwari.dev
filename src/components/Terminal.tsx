@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CommandMenu from './CommandMenu';
 import TerminalOutput from './TerminalOutput';
 import TerminalInput from './TerminalInput';
@@ -135,7 +135,6 @@ Just kidding! Admin mode activated. You now have root access!`]);
             <TerminalInput
               currentCommand={currentCommand}
               onCommandChange={setCurrentCommand}
-              onCommandSubmit={() => handleCommand(currentCommand)}
               onKeyPress={handleKeyPress}
               disabled={!isTypewriterComplete}
             />
