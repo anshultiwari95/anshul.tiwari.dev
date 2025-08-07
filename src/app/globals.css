@@ -1,26 +1,412 @@
-@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 
+/* Retro Terminal Theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --terminal-bg: #000000;
+  --terminal-text: #00ff00;
+  --terminal-secondary: #00aa00;
+  --terminal-cursor: #00ff00;
+  --terminal-border: rgba(0, 255, 0, 0.3);
+  --terminal-hover: #00dd00;
+  --terminal-prompt: #00aa00;
+  --terminal-output: #00bb00;
+  --terminal-error: #ff0000;
+  --terminal-warning: #ffff00;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Source Code Pro', 'Courier New', 'Monaco', 'Menlo', monospace;
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.3);
 }
+
+/* Terminal cursor animation */
+@keyframes blink {
+  0%, 50% { 
+    opacity: 1; 
+    background-color: #00ff00;
+  }
+  51%, 100% { 
+    opacity: 0; 
+    background-color: transparent;
+  }
+}
+
+.cursor-blink {
+  animation: blink 1.2s infinite;
+  font-weight: bold;
+  background-color: #00ff00;
+  width: 8px;
+  height: 1.2em;
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-left: 1px;
+  border: none;
+  outline: none;
+}
+
+/* Retro terminal glow effect */
+.terminal-glow {
+  box-shadow: 
+    0 0 10px rgba(0, 170, 0, 0.3),
+    inset 0 0 20px rgba(0, 170, 0, 0.1);
+  background: linear-gradient(145deg, #0a0a0a, #0f0f0f);
+  transition: all 0.3s ease;
+}
+
+.terminal-glow:hover {
+  box-shadow: 
+    0 0 20px rgba(0, 170, 0, 0.5),
+    inset 0 0 30px rgba(0, 170, 0, 0.2);
+  border-color: var(--terminal-hover);
+}
+
+/* Retro command hover effects */
+.command-hover {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-shadow: 0 0 8px var(--terminal-text);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.command-hover:hover {
+  color: var(--terminal-hover);
+  text-shadow: 0 0 15px var(--terminal-hover);
+  background: rgba(0, 170, 0, 0.1);
+}
+
+/* Retro typewriter effect */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--terminal-text);
+  white-space: nowrap;
+  animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--terminal-text); }
+}
+
+/* Retro scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border: 1px solid var(--terminal-border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--terminal-text);
+  border-radius: 2px;
+  border: 1px solid var(--terminal-border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-hover);
+}
+
+/* Terminal input styling */
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--terminal-text);
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  text-shadow: 0 0 5px var(--terminal-text);
+}
+
+.terminal-input:focus {
+  text-shadow: 0 0 8px var(--terminal-text);
+}
+
+/* Terminal prompt styling */
+.terminal-prompt {
+  color: var(--terminal-prompt);
+  text-shadow: 0 0 5px var(--terminal-prompt);
+  font-weight: bold;
+}
+
+/* Terminal output styling */
+.terminal-output {
+  color: var(--terminal-output);
+  text-shadow: 0 0 3px var(--terminal-output);
+  line-height: 1.4;
+}
+
+/* Retro matrix rain animation */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0.8;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Retro flicker animation */
+@keyframes flicker {
+  0%, 100% {
+    color: #00dd00;
+  }
+  50% {
+    color: #00bb00;
+  }
+}
+
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.matrix-char {
+  animation: matrix-rain 3s linear infinite;
+  position: absolute;
+  color: #00dd00;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: -1;
+  pointer-events: none;
+  text-shadow: 0 0 3px #00dd00;
+  opacity: 0.8;
+}
+
+/* Retro terminal controls */
+.terminal-controls {
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+/* Retro card styling */
+.card-3d {
+  background: linear-gradient(145deg, #0a0a0a, #0f0f0f);
+}
+
+/* Fixed Layout Classes */
+.terminal-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.terminal-sidebar {
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  width: 400px !important;
+  min-width: 400px !important;
+  max-width: 400px !important;
+  order: 0 !important;
+}
+
+.terminal-main {
+  flex: 1 !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  order: 1 !important;
+}
+
+.terminal-output {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.terminal-input-container {
+  flex-direction: row !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .terminal-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .terminal-container {
+    padding: 0.5rem;
+  }
+  
+  .terminal-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .terminal-header .social-links {
+    justify-content: center;
+  }
+  
+  .command-menu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .command-menu span {
+    font-size: 0.875rem;
+  }
+  
+  .terminal-input {
+    font-size: 0.875rem;
+  }
+  
+  .terminal-output {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .terminal-container {
+    padding: 0.25rem;
+  }
+  
+  .terminal-header .social-links {
+    gap: 0.75rem;
+  }
+  
+  .terminal-header .social-links svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .command-menu {
+    font-size: 0.75rem;
+  }
+  
+  .terminal-input {
+    font-size: 0.75rem;
+  }
+  
+  .terminal-output {
+    font-size: 0.75rem;
+  }
+  
+  .terminal-controls {
+    width: 3px;
+    height: 3px;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 480px) {
+  .terminal-layout {
+    flex-direction: column;
+  }
+  
+  .terminal-main {
+    width: 100%;
+    order: 1;
+  }
+  
+  .command-menu {
+    text-align: center;
+  }
+  
+  .terminal-input-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .terminal-prompt {
+    font-size: 0.75rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .command-hover {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background: rgba(0, 255, 0, 0.1);
+  }
+  
+  .command-hover:active {
+    background: rgba(0, 255, 0, 0.2);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .terminal-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+  }
+  
+  .matrix-char {
+    animation: none;
+  }
+  
+  .terminal-glow {
+    transition: none;
+  }
+  
+  .command-hover {
+    transition: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --terminal-bg: #0a0a0a;
+    --terminal-text: #00dd00;
+  }
+}
+
+/* Print styles */
+@media print {
+  .terminal-container {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .terminal-glow {
+    box-shadow: none !important;
+  }
+  
+  .matrix-bg {
+    display: none !important;
+  }
+} 
+
+/* Ensure no borders on images */
+img {
+  border: none !important;
+  outline: none !important;
+} 
