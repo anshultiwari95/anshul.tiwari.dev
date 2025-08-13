@@ -58,20 +58,34 @@ Just kidding! Admin mode activated. You now have root access!`]);
           break;
         case 'resume':
           const downloadResume = async () => {
-            const messages = ['Downloading resume...', 'Downloading resume.', 'Downloading resume..', 'Downloading resume...'];
-            for (let i = 0; i < messages.length; i++) {
-              setTerminalOutputs(prev => [...prev.slice(0, -1), messages[i]]);
-              await new Promise(resolve => setTimeout(resolve, 500));
+            try {
+              // Show downloading message
+              setTerminalOutputs(prev => [...prev, 'Downloading resume...']);
+              
+              // Create download link
+              const link = document.createElement('a');
+              link.href = '/Anshul_Tiwari_Resume.pdf'; // Correct path to public folder
+              link.download = 'Anshul_Tiwari_Resume.pdf';
+              link.target = '_blank';
+              
+              // Add link to DOM temporarily
+              document.body.appendChild(link);
+              
+              // Trigger download
+              link.click();
+              
+              // Clean up
+              document.body.removeChild(link);
+              
+              // Show success message
+              setTerminalOutputs(prev => [...prev.slice(0, -1), '✅ Resume downloaded successfully!']);
+            } catch (error) {
+              // Show error message if download fails
+              setTerminalOutputs(prev => [...prev.slice(0, -1), '❌ Failed to download resume. Please try again.']);
+              console.error('Resume download error:', error);
             }
-            const link = document.createElement('a');
-            link.href = '/resume.pdf';
-            link.download = 'Anshul_Tiwari_Resume.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTerminalOutputs(prev => [...prev.slice(0, -1), 'Resume downloaded successfully!']);
           };
-          setTerminalOutputs(prev => [...prev, 'Downloading resume...']);
+          
           downloadResume();
           break;
         default:

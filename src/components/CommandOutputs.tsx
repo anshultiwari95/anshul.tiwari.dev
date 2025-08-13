@@ -162,7 +162,7 @@ drwxr-xr-x  2 anshul anshul 4096 Dec 15 10:30 public/
     
   sudo: 'Sudo mode activated. You now have root privileges.',
     
-  resume: 'Downloading resume...',
+  resume: '📄 Resume: Anshul_Tiwari_Resume.pdf\n\nClick to download my resume in PDF format.',
 };
 
 export default commandOutputs;
