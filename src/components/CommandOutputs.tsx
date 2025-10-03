@@ -49,51 +49,60 @@ Languages:
 1. YouTube Data DAO - Vana Academy
    • Built a Vana-based Data DAO for YouTube watch history
    • Chrome Extension + UI dashboard for data export
-   • React JS, Shadcn, Tailwind CSS, VANA, Solidity
+   • React.js, Shadcn, Tailwind CSS, VANA, Solidity
    • Python-based preprocessing scripts for AI model training
    Github: https://github.com/anshultiwari95/reddotdao
-   Live: https://reddotdao.vercel.app/
+   Live: https://reddotdao.vercel.app/   
 
-2. AI Mock Interviewer
+2. HackaRag – Hackathon Idea Evaluator
+   • Built an AI-powered evaluator that scores hackathon ideas and maps them to relevant sponsor bounties.
+   • Multi-agent LangGraph pipeline with 12 evaluation metrics (novelty, feasibility, scalability, UX value).
+   • FAISS-based semantic search with event, sponsor, and bounty-level filtering.
+   • Real-time feedback dashboard built in Streamlit with LLM-powered scoring.
+   • SQLite + JSON ingestion system for multi-hackathon dataset persistence.
+   • Dockerized and deployable on Fluence decentralized compute.
+   Github: https://github.com/garg-prashant/hackarag
+
+3. AI Mock Interviewer
    • Full-stack AI-driven mock interview application
    • Real-time questions using Gemini AI
    • Video/microphone recording with speech-to-text
-   • Next JS, ClerkJs, Drizzle ORM, PostgreSQL
+   • Next.js, ClerkJs, Drizzle ORM, PostgreSQL
    Github: https://github.com/anshultiwari95/AI-Mock-Interviewer
    Live: https://ai-mock-interviewer.vercel.app/
 
-3. Pulze Website
+4. Pulze Website
    • Scalable meeting-sharing tool with screen recording
    • Video creation, editing, annotation, and sharing
    • Next.js, Prisma, Node.js, MongoDB, AWS, WebRTC
    Github: https://github.com/anshultiwari95/Pulze
    Live: https://pulze.vercel.app/
 
-4. Product Showcase Website
+5. Product Showcase Website
 • Dynamic product landing page with carousel and product filters
 • Built using styled-components and Framer Motion for animations
-• React JS, Vite, Styled Components
+• React.js, Vite, Styled Components
 Github: https://github.com/anshultiwari95/Product-Showcase-Frontend
 Live: https://product-showcase-frontend.vercel.app/
 
-5. Connectly - Client Communication App
+6. Connectly - Client Communication App
 • Frontend for a real-time communication tool for client interaction
 • Secure login, state-managed chat interface
-• React JS, Redux, Tailwind CSS
+• React.js, Redux, Tailwind CSS
 Github: https://github.com/anshultiwari95/ConnectlyFrontEnd
 Live: https://connectly-front-end.vercel.app/login
 
-6. Real Estate Website
+7. Real Estate Website
 • Property listings with search, filters, and agent profiles
 • Fully responsive and designed for high usability
-• React JS, Tailwind CSS
+• React.js, Tailwind CSS
 Github: https://github.com/anshultiwari95/RealEstateWebsiteFrontend
 Live: https://real-estate-website-frontend-rho.vercel.app/
 
-7. Dice Game
+8. Dice Game
 • Interactive game where players guess the outcome of a dice roll
 • Earn points on correct guess, lose points on wrong guess
-• React, Vite, Styled Components
+• React.js, Vite, Styled Components
 Github: https://github.com/anshultiwari95/DiceGame
 Live: https://dice-game-one-indol.vercel.app/`,
 

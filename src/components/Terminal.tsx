@@ -17,8 +17,10 @@ export default function Terminal({ showMatrix, sudoMode, setShowMatrix, setSudoM
   const [currentCommand, setCurrentCommand] = useState('');
   const [commandHistory, setCommandHistory] = useState<string[]>(['welcome']);
   const [terminalOutputs, setTerminalOutputs] = useState<string[]>(['\nHi, I\'m Anshul Tiwari, a Software Engineer & AI Enthusiast.\n\nWelcome to my interactive hacker terminal portfolio! 🚀\n\nType \'help\' to see all available commands\nQuick commands: matrix, sudo, whoami, date, ls, pwd']);
+  const [welcomeMessage] = useState('\nHi, I\'m Anshul Tiwari, a Software Engineer & AI Enthusiast.\n\nWelcome to my interactive hacker terminal portfolio! 🚀\n\nType \'help\' to see all available commands\nQuick commands: matrix, sudo, whoami, date, ls, pwd');
   const [isTypewriterComplete, setIsTypewriterComplete] = useState(true);
   const [useTypewriter, setUseTypewriter] = useState(false);
+  const [pendingOutput, setPendingOutput] = useState<string | null>(null);
 
   const handleCommand = (command: string) => {
     if (command.trim()) {
@@ -27,40 +29,49 @@ export default function Terminal({ showMatrix, sudoMode, setShowMatrix, setSudoM
       
       const cmd = command.toLowerCase();
       
-      setIsTypewriterComplete(true);
+      // Disable typewriter effect and mark as incomplete to prevent flicker
+      setUseTypewriter(false);
+      setIsTypewriterComplete(false);
       
-      switch (cmd) {
+      // Process command after a brief delay
+      setTimeout(() => {
+        let output = '';
+        switch (cmd) {
         case 'matrix':
           setShowMatrix(!showMatrix);
           if (!showMatrix) {
-            setTerminalOutputs(prev => [...prev, `Matrix mode activated!]
+            output = `Matrix mode activated!]
 Welcome to the digital realm...
-Type 'matrix' again to disable.`]);
+Type 'matrix' again to disable.`;
           } else {
-            setTerminalOutputs(prev => [...prev, `Matrix mode disabled. Welcome back to reality.`]);
+            output = `Matrix mode disabled. Welcome back to reality.`;
           }
           break;
         case 'sudo':
           setSudoMode(!sudoMode);
           if (!sudoMode) {
-            setTerminalOutputs(prev => [...prev, `[sudo] password for anshul: ********
+            output = `[sudo] password for anshul: ********
 anshul is not in the sudoers file. This incident will be reported.
-Just kidding! Admin mode activated. You now have root access!`]);
+Just kidding! Admin mode activated. You now have root access!`;
           } else {
-            setTerminalOutputs(prev => [...prev, `Admin mode disabled. Back to regular user privileges.`]);
+            output = `Admin mode disabled. Back to regular user privileges.`;
           }
           break;
         case 'clear':
-          setTerminalOutputs([]);
-          setCommandHistory([]);
+          setTerminalOutputs([welcomeMessage]);
+          setCommandHistory(['welcome']);
           setShowMatrix(false);
           setIsTypewriterComplete(true);
-          break;
+          setUseTypewriter(false);
+          setPendingOutput(null);
+          return; // Exit early for clear command
         case 'resume':
           const downloadResume = async () => {
             try {
               // Show downloading message
-              setTerminalOutputs(prev => [...prev, 'Downloading resume...']);
+              setPendingOutput('Downloading resume...');
+              setTerminalOutputs(prev => [...prev, '']);
+              setUseTypewriter(true);
               
               // Create download link
               const link = document.createElement('a');
@@ -79,25 +90,34 @@ Just kidding! Admin mode activated. You now have root access!`]);
               
               // Show success message
               setTerminalOutputs(prev => [...prev.slice(0, -1), '✅ Resume downloaded successfully!']);
+              setPendingOutput(null);
             } catch (error) {
               // Show error message if download fails
               setTerminalOutputs(prev => [...prev.slice(0, -1), '❌ Failed to download resume. Please try again.']);
+              setPendingOutput(null);
               console.error('Resume download error:', error);
             }
           };
           
           downloadResume();
-          break;
+          return;
         default:
-          const response = commandOutputs[cmd] || `Command '${command}' not found. Type 'help' for available commands.`;
-          setTerminalOutputs(prev => [...prev, response]);
-      }
+          output = commandOutputs[cmd] || `Command '${command}' not found. Type 'help' for available commands.`;
+        }
+        
+        // Store the output and enable typewriter
+        setPendingOutput(output);
+        setTerminalOutputs(prev => [...prev, '']);
+        // Only enable typewriter if not already enabled
+        if (!useTypewriter) {
+          setUseTypewriter(true);
+        }
+      }, 100);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      setUseTypewriter(true);
       handleCommand(currentCommand);
     }
   };
@@ -120,7 +140,6 @@ Just kidding! Admin mode activated. You now have root access!`]);
 
         <div className="mb-8 flex-shrink-0">
           <CommandMenu onCommand={(command) => {
-            setUseTypewriter(true);
             setCurrentCommand(command);
             handleCommand(command);
           }} />
@@ -133,6 +152,14 @@ Just kidding! Admin mode activated. You now have root access!`]);
               terminalOutputs={terminalOutputs}
               onTypewriterComplete={setIsTypewriterComplete}
               useTypewriter={useTypewriter}
+              pendingOutput={pendingOutput}
+              onPendingOutputComplete={() => {
+                if (pendingOutput) {
+                  setTerminalOutputs(prev => [...prev.slice(0, -1), pendingOutput]);
+                  setPendingOutput(null);
+                  setUseTypewriter(false);
+                }
+              }}
             />
           </div>
           
